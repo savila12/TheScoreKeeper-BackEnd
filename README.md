@@ -1,10 +1,10 @@
 # TheScoreKeeper
+
 GA Final Project
 
 Team Members:
-    Sidney Avila  
-    Pete Micsunescu
+Sidney Avila  
+Pete Micsunescu
 
 Technologies:
-    - SpringBoot 
-    - Angular
+- SpringBoot - Angular
