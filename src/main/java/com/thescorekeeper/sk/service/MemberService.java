@@ -18,6 +18,7 @@ import java.util.Optional;
 public class MemberService {
 
     private TeamRepository teamRepository;
+
     private MemberRepository memberRepository;
 
     @Autowired
@@ -32,7 +33,7 @@ public class MemberService {
 
 
     public Member addTeamMember(Member member) {
-
+        System.out.println("Calling service addTeamMember --->");
         MyUserDetails myUserDetails =
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
@@ -55,13 +56,11 @@ public class MemberService {
         newMember.setTeam(teamOfCoach);
 
         return memberRepository.save(newMember);
-
-
     }
 
 
-    public Member deleteTeamMember(Long memberId) {
-
+    public String deleteTeamMember(Long memberId) {
+        System.out.println("Calling service deleteMember --->");
         MyUserDetails myUserDetails =
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
@@ -70,23 +69,15 @@ public class MemberService {
 
         Optional<Member> member = memberRepository.findById(memberId);
 
-        Member memberToDelete;
-
-        if (member == null) {
+        if (member.isEmpty()) {
             throw new DataNotFoundException("No such member with id:" + memberId);
         } else {
-
-            //memberRepository.deleteById(memberId);
-            memberToDelete = member.get();
+            if(member.get().getId().equals(teamId)){
+                memberRepository.deleteById(memberId);
+                return "Successfully Deleted";
+            }else{
+                throw new DataNotFoundException("Member is not on this team");
+            }
         }
-
-        if (memberToDelete.getTeam().getId() == teamId){
-            memberRepository.deleteById(memberId);
-            return memberToDelete;
-        }else{
-            throw new DataNotFoundException("Member not on team.");
-        }
-
     }
-
 } // END OF CLASS

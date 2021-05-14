@@ -52,7 +52,7 @@ public class TeamController {
 
     //http://localhost:9092/api/teams/members/memberId
     @DeleteMapping("/teams/members/{memberId}")
-    public Member deleteTeamMember(@PathVariable Long memberId){
+    public String deleteTeamMember(@PathVariable Long memberId){
         System.out.println("Calling deleteTeamMember -->");
         return memberService.deleteTeamMember(memberId);
     }
