@@ -52,11 +52,11 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
-//    @PostMapping("/teams")
-//    public Team createTeam(@RequestBody Team team) {
-//        System.out.println("Calling createTeam -->");
-//        return teamService.createTeams();
-//    }
+    @PostMapping("/teams")
+    public Team createTeam(@RequestBody Team team) {
+        System.out.println("Calling createTeam -->");
+        return teamService.createTeam(team);
+    }
 
     @GetMapping("/teams/members")
     public List<Member> getAllTeamMembers() {
