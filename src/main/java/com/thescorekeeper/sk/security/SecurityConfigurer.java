@@ -38,7 +38,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests().antMatchers("/auth/users/register" ,
                 "/auth/users/login" ,
-                "/api/helloworld" ,
+                "/api/teams" ,
                 "/auth/users" ).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()

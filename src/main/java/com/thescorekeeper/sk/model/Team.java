@@ -1,6 +1,9 @@
 package com.thescorekeeper.sk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "team")
@@ -27,6 +30,12 @@ public class Team {
     @Column
     private String logo_URL;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "team")
+    private User user;
+
+    @OneToMany(mappedBy = "team")
+    private List<Member> memberList;
 
     public Long getId() {
         return id;
@@ -76,7 +85,21 @@ public class Team {
         this.logo_URL = logo_URL;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Member> getMemberList() {
+        return memberList;
+    }
+
+    public void setMemberList(List<Member> memberList) {
+        this.memberList = memberList;
+    }
 
     @Override
     public String toString() {
