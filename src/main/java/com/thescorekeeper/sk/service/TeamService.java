@@ -17,6 +17,7 @@ import java.util.Optional;
 public class TeamService {
 
     private MemberRepository memberRepository;
+
     private TeamRepository teamRepository;
 
     @Autowired
@@ -30,7 +31,7 @@ public class TeamService {
     }
 
     // Get all teams
-    // http://localhost:9092/api/teams
+    //http://localhost:9092/api/teams
     public List<Team> getAllTeams(){
         System.out.println("calling the service 'getAllTeams' ->");
         List<Team> teamList = teamRepository.findAll();
@@ -41,7 +42,7 @@ public class TeamService {
         }
     }
 
-    // http://localhost:9092/api/teams/members
+    //http://localhost:9092/api/teams/members
     public List<Member> getAllMembers(){
         System.out.println("calling the service 'getAllMembers' ->");
 
