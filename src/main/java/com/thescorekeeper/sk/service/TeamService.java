@@ -1,29 +1,25 @@
 package com.thescorekeeper.sk.service;
 
-
+import com.thescorekeeper.sk.model.Team;
+import com.thescorekeeper.sk.repository.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.thescorekeeper.sk.exception.DataNotFoundException;
 import com.thescorekeeper.sk.model.Member;
-import com.thescorekeeper.sk.model.Team;
-import com.thescorekeeper.sk.model.User;
-import com.thescorekeeper.sk.repository.MemberRepository;
-import com.thescorekeeper.sk.repository.TeamRepository;
-import com.thescorekeeper.sk.repository.UserRepository;
-import com.thescorekeeper.sk.security.MyUserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import com.thescorekeeper.sk.repository.MemberRepository;
+
+import com.thescorekeeper.sk.security.MyUserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
 
-
     private MemberRepository memberRepository;
+
     private TeamRepository teamRepository;
 
     @Autowired
@@ -37,7 +33,7 @@ public class TeamService {
     }
 
     // Get all teams
-    // http://localhost:9092/api/teams
+    //http://localhost:9092/api/teams
     public List<Team> getAllTeams(){
         System.out.println("calling the service 'getAllTeams' ->");
         List<Team> teamList = teamRepository.findAll();
@@ -48,7 +44,7 @@ public class TeamService {
         }
     }
 
-
+    //http://localhost:9092/api/teams/members
     public List<Member> getAllMembers(){
         System.out.println("calling the service 'getAllMembers' ->");
 
@@ -68,11 +64,11 @@ public class TeamService {
             teamOfCoach = team.get().getId();
         }
 
-        List<Member> m1 = memberRepository.findByTeamId(teamOfCoach);
-
-        return m1;
+        return memberRepository.findByTeamId(teamOfCoach);
 
     }
+
+}
 
     public Team createTeam(Team team){
 
@@ -97,8 +93,6 @@ public class TeamService {
 
 
     }
-
-
 
 
 } // END OF CLASS
