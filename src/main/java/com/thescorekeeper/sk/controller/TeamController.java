@@ -36,7 +36,16 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
+ 
     //http://localhost:9092/api/teams/members
+ 
+    @PostMapping("/teams")
+    public Team createTeam(@RequestBody Team team) {
+        System.out.println("Calling createTeam -->");
+        return teamService.createTeam(team);
+    }
+
+ 
     @GetMapping("/teams/members")
     public List<Member> getAllTeamMembers() {
         System.out.println("Calling getAllTeamMembers -->");

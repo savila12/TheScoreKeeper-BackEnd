@@ -30,8 +30,9 @@ public class Team {
     @Column
     private String logo_URL;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "team")
+    //@JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @OneToMany(mappedBy = "team")
@@ -110,8 +111,8 @@ public class Team {
                 ", parkName='" + parkName + '\'' +
                 ", isHome=" + isHome +
                 ", logo_URL='" + logo_URL + '\'' +
+                ", user=" + user +
+                ", memberList=" + memberList +
                 '}';
     }
-
-
 }

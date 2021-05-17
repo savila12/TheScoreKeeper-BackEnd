@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.thescorekeeper.sk.exception.DataNotFoundException;
 import com.thescorekeeper.sk.model.Member;
+
 import com.thescorekeeper.sk.repository.MemberRepository;
+
 import com.thescorekeeper.sk.security.MyUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -65,4 +67,32 @@ public class TeamService {
         return memberRepository.findByTeamId(teamOfCoach);
 
     }
+
 }
+
+    public Team createTeam(Team team){
+
+        System.out.println("calling the service 'createTeam' ->");
+
+        MyUserDetails myUserDetails =
+                (MyUserDetails) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+
+        Team newTeam = new Team();
+
+        newTeam.setCity(team.getCity());
+        newTeam.setHome(team.getHome());
+        newTeam.setLogo_URL(team.getLogo_URL());
+        newTeam.setParkName(team.getParkName());
+        newTeam.setTeamName(team.getTeamName());
+        newTeam.setUser(myUserDetails.getUser());
+
+        teamRepository.save(newTeam);
+
+        return newTeam;
+
+
+    }
+
+
+} // END OF CLASS
