@@ -53,6 +53,13 @@ public class MemberService {
 
         newMember.setAddress(member.getAddress());
         newMember.setFirstName(member.getFirstName());
+        newMember.setLastName(member.getLastName());
+        newMember.setEmail(member.getEmail());
+        newMember.setBattingOrder(member.getBattingOrder());
+        newMember.setPhoneNumber(member.getPhoneNumber());
+        newMember.setPosition(member.getPosition());
+        newMember.setRole(member.getRole());
+        newMember.setPlayerNumber(member.getPlayerNumber());
         newMember.setTeam(teamOfCoach);
 
         return memberRepository.save(newMember);

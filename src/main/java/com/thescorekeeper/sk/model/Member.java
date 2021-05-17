@@ -172,6 +172,7 @@ public class Member {
                 ", statistics='" + statistics + '\'' +
                 ", playerNumber=" + playerNumber +
                 ", battingOrder=" + battingOrder +
+                ", team=" + team +
                 '}';
     }
 }

@@ -79,7 +79,6 @@ public class TeamService {
         Team newTeam = new Team();
 
         newTeam.setCity(team.getCity());
-        newTeam.setHome(team.getHome());
         newTeam.setLogo_URL(team.getLogo_URL());
         newTeam.setParkName(team.getParkName());
         newTeam.setTeamName(team.getTeamName());
@@ -88,7 +87,5 @@ public class TeamService {
         teamRepository.save(newTeam);
 
         return newTeam;
-
-
     }
 } // END OF CLASS
