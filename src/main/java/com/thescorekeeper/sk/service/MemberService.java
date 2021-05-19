@@ -68,18 +68,24 @@ public class MemberService {
 
     public String deleteTeamMember(Long memberId) {
         System.out.println("Calling service deleteMember --->");
+
         MyUserDetails myUserDetails =
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 
+
         Long teamId = myUserDetails.getUser().getId();
+        System.out.println("this is the coach's team id:" + teamId);
+
 
         Optional<Member> member = memberRepository.findById(memberId);
+        Member foundMember;
 
         if (member.isEmpty()) {
             throw new DataNotFoundException("No such member with id:" + memberId);
         } else {
-            if(member.get().getId().equals(teamId)){
+            foundMember = member.get();
+            if(foundMember.getTeam().getId() == teamId){
                 memberRepository.deleteById(memberId);
                 return "Successfully Deleted";
             }else{
