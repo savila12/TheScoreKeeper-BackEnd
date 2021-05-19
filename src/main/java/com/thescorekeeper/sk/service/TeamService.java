@@ -1,5 +1,6 @@
 package com.thescorekeeper.sk.service;
 
+import com.thescorekeeper.sk.exception.DataExistException;
 import com.thescorekeeper.sk.model.Team;
 import com.thescorekeeper.sk.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,16 +77,24 @@ public class TeamService {
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 
-        Team newTeam = new Team();
 
-        newTeam.setCity(team.getCity());
-        newTeam.setLogo_URL(team.getLogo_URL());
-        newTeam.setParkName(team.getParkName());
-        newTeam.setTeamName(team.getTeamName());
-        newTeam.setUser(myUserDetails.getUser());
 
-        teamRepository.save(newTeam);
+        Team team1 = teamRepository.findByUserId(myUserDetails.getUser().getId());
 
-        return newTeam;
+        if(team1 != null) {
+            throw new DataExistException("Already coaching a team!");
+        }else {
+
+            Team team2 = new Team();
+            team2.setCity(team.getCity());
+            team2.setLogo_URL(team.getLogo_URL());
+            team2.setParkName(team.getParkName());
+            team2.setTeamName(team.getTeamName());
+            team2.setUser(myUserDetails.getUser());
+
+            teamRepository.save(team2);
+        }
+
+        return team;
     }
 } // END OF CLASS

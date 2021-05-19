@@ -38,15 +38,15 @@ public class MemberService {
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 
-        Long teamId = myUserDetails.getUser().getId();
-        Optional<Team> team = teamRepository.findById(teamId);
+        Long coachId = myUserDetails.getUser().getId();
+        Optional<Team> teamOfCoach = teamRepository.findById(coachId);
 
-        Team teamOfCoach;
+        Long TeamId;
 
-        if (team.isEmpty()) {
-            throw new DataNotFoundException("No team found.");
+        if (teamOfCoach.isEmpty()) {
+            throw new DataNotFoundException("Coach doesn't have a team.");
         } else {
-            teamOfCoach = team.get();
+            TeamId = teamOfCoach.get().getId();
         }
 
         Member newMember = new Member();
@@ -60,7 +60,7 @@ public class MemberService {
         newMember.setPosition(member.getPosition());
         newMember.setRole(member.getRole());
         newMember.setPlayerNumber(member.getPlayerNumber());
-        newMember.setTeam(teamOfCoach);
+        newMember.setTeam(teamOfCoach.get());
 
         return memberRepository.save(newMember);
     }
