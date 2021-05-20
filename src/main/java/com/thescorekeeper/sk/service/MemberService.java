@@ -72,19 +72,15 @@ public class MemberService {
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 
-        Long teamId = myUserDetails.getUser().getId();
+        Long userId = myUserDetails.getUser().getId();
 
-        Optional<Member> member = memberRepository.findById(memberId);
+        Member member = memberRepository.findByIdAndTeamId(memberId, userId);
 
-        if (member.isEmpty()) {
+        if (member == null) {
             throw new DataNotFoundException("No such member with id:" + memberId);
         } else {
-            if(member.get().getId().equals(teamId)){
-                memberRepository.deleteById(memberId);
-                return "Successfully Deleted";
-            }else{
-                throw new DataNotFoundException("Member is not on this team");
-            }
+            memberRepository.deleteById(memberId);
+            return "Successfully Deleted";
         }
     }
 } // END OF CLASS
