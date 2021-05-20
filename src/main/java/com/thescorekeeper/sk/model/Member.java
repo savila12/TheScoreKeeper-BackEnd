@@ -1,6 +1,8 @@
 package com.thescorekeeper.sk.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -44,6 +46,11 @@ public class Member {
 
     @Column
     private Long battingOrder;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    private Team team;
 
 
     public Long getId() {
@@ -142,6 +149,13 @@ public class Member {
         this.battingOrder = battingOrder;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 
     @Override
     public String toString() {
@@ -158,6 +172,7 @@ public class Member {
                 ", statistics='" + statistics + '\'' +
                 ", playerNumber=" + playerNumber +
                 ", battingOrder=" + battingOrder +
+                ", team=" + team +
                 '}';
     }
 }

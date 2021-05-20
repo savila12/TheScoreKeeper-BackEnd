@@ -33,6 +33,10 @@ public class User {
     private String userName;
 
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private Team team;
+
+
     public User() {
     }
 
