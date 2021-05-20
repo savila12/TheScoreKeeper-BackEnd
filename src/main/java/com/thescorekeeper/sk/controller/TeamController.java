@@ -37,21 +37,21 @@ public class TeamController {
     }
 
 
-    //http://localhost:9092/api/teams/members
-
+    //http://localhost:9092/api/teams
     @PostMapping("/teams")
     public Team createTeam(@RequestBody Team team) {
         System.out.println("Calling createTeam -->");
         return teamService.createTeam(team);
     }
 
-
+    //http://localhost:9092/api/teams/members
     @GetMapping("/teams/members")
     public List<Member> getAllTeamMembers() {
         System.out.println("Calling getAllTeamMembers -->");
         return teamService.getAllMembers();
     }
 
+    //http://localhost:9092/api/teams/members/memberId
     @GetMapping("/teams/members/{memberId}")
     public Member getAMember(@PathVariable Long memberId){
         System.out.println("Calling getAMember =====>");
