@@ -12,6 +12,7 @@ import com.thescorekeeper.sk.repository.MemberRepository;
 
 import com.thescorekeeper.sk.security.MyUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,6 +69,7 @@ public class TeamService {
         return memberRepository.findByTeamId(teamOfCoach);
 
     }
+
 
     public Team createTeam(Team team){
 

@@ -65,6 +65,23 @@ public class MemberService {
         return memberRepository.save(newMember);
     }
 
+    public Member getAMember(Long memberId){
+        System.out.println("Calling service getAMember =====>");
+        MyUserDetails myUserDetails =
+                (MyUserDetails) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+
+        Member member = this.memberRepository.findByIdAndTeamId(myUserDetails.getUser().getId(), memberId);
+
+//        System.out.println(member);
+        if(member == null){
+            throw new DataNotFoundException("member with id: " + memberId + " doesn't exist");
+        }
+        else{
+            return member;
+        }
+    }
+
 
     public String deleteTeamMember(Long memberId) {
         System.out.println("Calling service deleteMember --->");
@@ -85,7 +102,7 @@ public class MemberService {
             throw new DataNotFoundException("No such member with id:" + memberId);
         } else {
             foundMember = member.get();
-            if(foundMember.getTeam().getId() == teamId){
+            if(foundMember.getTeam().getId().equals(teamId)){
                 memberRepository.deleteById(memberId);
                 return "Successfully Deleted";
             }else{
