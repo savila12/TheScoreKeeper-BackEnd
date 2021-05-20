@@ -4,10 +4,10 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import javax.sql.DataSource;
 
+import javax.sql.DataSource;
 // configuration bean heroku
-class DatabaseConfig {
+public class DatabaseConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
     @Bean
