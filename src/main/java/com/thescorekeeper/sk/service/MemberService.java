@@ -38,15 +38,15 @@ public class MemberService {
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 
-        Long teamId = myUserDetails.getUser().getId();
-        Optional<Team> team = teamRepository.findById(teamId);
+        Long coachId = myUserDetails.getUser().getId();
+        Optional<Team> teamOfCoach = teamRepository.findById(coachId);
 
-        Team teamOfCoach;
+        Long TeamId;
 
-        if (team.isEmpty()) {
-            throw new DataNotFoundException("No team found.");
+        if (teamOfCoach.isEmpty()) {
+            throw new DataNotFoundException("Coach doesn't have a team.");
         } else {
-            teamOfCoach = team.get();
+            TeamId = teamOfCoach.get().getId();
         }
 
         Member newMember = new Member();
@@ -60,7 +60,7 @@ public class MemberService {
         newMember.setPosition(member.getPosition());
         newMember.setRole(member.getRole());
         newMember.setPlayerNumber(member.getPlayerNumber());
-        newMember.setTeam(teamOfCoach);
+        newMember.setTeam(teamOfCoach.get());
 
         return memberRepository.save(newMember);
     }
@@ -68,19 +68,29 @@ public class MemberService {
 
     public String deleteTeamMember(Long memberId) {
         System.out.println("Calling service deleteMember --->");
+
         MyUserDetails myUserDetails =
                 (MyUserDetails) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 
-        Long userId = myUserDetails.getUser().getId();
 
-        Member member = memberRepository.findByIdAndTeamId(memberId, userId);
+        Long teamId = myUserDetails.getUser().getId();
+        System.out.println("this is the coach's team id:" + teamId);
 
-        if (member == null) {
+
+        Optional<Member> member = memberRepository.findById(memberId);
+        Member foundMember;
+
+        if (member.isEmpty()) {
             throw new DataNotFoundException("No such member with id:" + memberId);
         } else {
-            memberRepository.deleteById(memberId);
-            return "Successfully Deleted";
+            foundMember = member.get();
+            if(foundMember.getTeam().getId().equals(teamId)){
+                memberRepository.deleteById(memberId);
+                return "Successfully Deleted";
+            }else{
+                throw new DataNotFoundException("Member is not on this team");
+            }
         }
     }
 } // END OF CLASS
