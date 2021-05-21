@@ -60,7 +60,7 @@ public class TeamService {
 
         Long teamOfCoach;
 
-        if( team.isEmpty()){
+        if(!team.isPresent()){
             throw new DataNotFoundException("No team found.");
         } else {
             teamOfCoach = team.get().getId();

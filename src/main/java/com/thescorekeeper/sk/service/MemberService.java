@@ -43,7 +43,7 @@ public class MemberService {
 
         Long TeamId;
 
-        if (teamOfCoach.isEmpty()) {
+        if (!teamOfCoach.isPresent()) {
             throw new DataNotFoundException("Coach doesn't have a team.");
         } else {
             TeamId = teamOfCoach.get().getId();
@@ -98,7 +98,7 @@ public class MemberService {
         Optional<Member> member = memberRepository.findById(memberId);
         Member foundMember;
 
-        if (member.isEmpty()) {
+        if (!member.isPresent()) {
             throw new DataNotFoundException("No such member with id:" + memberId);
         } else {
             foundMember = member.get();
