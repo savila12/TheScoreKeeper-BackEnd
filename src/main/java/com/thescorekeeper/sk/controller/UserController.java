@@ -5,10 +5,9 @@ import com.thescorekeeper.sk.model.User;
 import com.thescorekeeper.sk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/auth/users")
@@ -35,7 +34,11 @@ public class UserController {
         return userService.loginUser(loginRequest);
     }
 
-
+    @GetMapping("/coaches")
+    public List<User> getCoaches(){
+        System.out.println("calling getCoaches");
+        return userService.getCoaches();
+    }
 
 
 

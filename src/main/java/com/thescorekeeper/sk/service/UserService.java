@@ -1,6 +1,7 @@
 package com.thescorekeeper.sk.service;
 
 
+import com.thescorekeeper.sk.exception.DataNotFoundException;
 import com.thescorekeeper.sk.exception.InformationNotFoundException;
 import com.thescorekeeper.sk.model.Request.LoginRequest;
 import com.thescorekeeper.sk.model.Response.LoginResponse;
@@ -15,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -69,10 +72,18 @@ public class UserService {
         } catch (NullPointerException e) {
             throw new InformationNotFoundException("user with that email address " + loginRequest.getEmail() + "not found");
         }
-
     }
 
-
+    public List<User> getCoaches(){
+        System.out.println("calling Service getCoaches ====>");
+        List<User> userList = userRepository.findAll();
+        if(userList.isEmpty()){
+            throw new DataNotFoundException("No Coaches found");
+        }
+        else{
+            return userList;
+        }
+    }
 
 
 
